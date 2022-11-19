@@ -32,4 +32,11 @@ public class DiscoverUserIT
 			""")
 		);
 	}
+	
+	@Test
+	public void cannotDiscoverResourceForDifferentScheme() throws Exception
+	{
+		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "mailto:alice@alice.com"))
+			.andExpect(status().isNotFound());
+	}
 }
