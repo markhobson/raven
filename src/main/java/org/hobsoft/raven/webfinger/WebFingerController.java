@@ -17,11 +17,13 @@ public class WebFingerController
 	@GetMapping(value = ".well-known/webfinger", produces = APPLICATION_JRD_JSON_VALUE)
 	public ResponseEntity<ResourceDescriptor> discover(URI resource)
 	{
+		// validate scheme
 		if (!ACCT_SCHEME.equals(resource.getScheme()))
 		{
 			return ResponseEntity.notFound().build();
 		}
 		
+		// validate account
 		Account account;
 		try
 		{
@@ -32,6 +34,7 @@ public class WebFingerController
 			return ResponseEntity.badRequest().build();
 		}
 		
+		// validate host
 		String host = ServletUriComponentsBuilder.fromCurrentServletMapping().build().getHost();
 		if (!account.host().equals(host))
 		{
