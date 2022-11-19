@@ -21,6 +21,15 @@ public class WebFingerController
 			return ResponseEntity.notFound().build();
 		}
 		
+		try
+		{
+			Account.parse(resource.getSchemeSpecificPart());
+		}
+		catch (IllegalArgumentException exception)
+		{
+			return ResponseEntity.badRequest().build();
+		}
+		
 		return ResponseEntity.ok(new ResourceDescriptor(resource));
 	}
 }

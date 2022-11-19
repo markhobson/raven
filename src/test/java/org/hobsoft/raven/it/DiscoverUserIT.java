@@ -22,12 +22,12 @@ public class DiscoverUserIT
 	@Test
 	public void canDiscoverUser() throws Exception
 	{
-		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "acct:alice")).andExpectAll(
+		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "acct:alice@alice.com")).andExpectAll(
 			status().isOk(),
 			content().contentType("application/jrd+json"),
 			content().json("""
 				{
-					"subject": "acct:alice"
+					"subject": "acct:alice@alice.com"
 				}
 			""")
 		);
@@ -38,5 +38,12 @@ public class DiscoverUserIT
 	{
 		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "mailto:alice@alice.com"))
 			.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void cannotDiscoverUserForMalformedAccount() throws Exception
+	{
+		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "acct:alice"))
+			.andExpect(status().isBadRequest());
 	}
 }
