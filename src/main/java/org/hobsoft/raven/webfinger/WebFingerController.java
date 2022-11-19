@@ -4,17 +4,19 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
+@RequestMapping(".well-known/webfinger")
 public class WebFingerController
 {
 	private static final String ACCT_SCHEME = "acct";
 	
 	private static final String APPLICATION_JRD_JSON_VALUE = "application/jrd+json";
 	
-	@GetMapping(value = ".well-known/webfinger", produces = APPLICATION_JRD_JSON_VALUE)
+	@GetMapping(produces = APPLICATION_JRD_JSON_VALUE)
 	public ResponseEntity<ResourceDescriptor> discover(URI resource)
 	{
 		// validate scheme
