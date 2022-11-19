@@ -5,6 +5,7 @@ import java.net.URI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class WebFingerController
@@ -21,13 +22,20 @@ public class WebFingerController
 			return ResponseEntity.notFound().build();
 		}
 		
+		Account account;
 		try
 		{
-			Account.parse(resource.getSchemeSpecificPart());
+			account = Account.parse(resource.getSchemeSpecificPart());
 		}
 		catch (IllegalArgumentException exception)
 		{
 			return ResponseEntity.badRequest().build();
+		}
+		
+		String host = ServletUriComponentsBuilder.fromCurrentServletMapping().build().getHost();
+		if (!account.host().equals(host))
+		{
+			return ResponseEntity.notFound().build();
 		}
 		
 		return ResponseEntity.ok(new ResourceDescriptor(resource));

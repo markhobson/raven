@@ -22,15 +22,19 @@ public class DiscoverUserIT
 	@Test
 	public void canDiscoverUser() throws Exception
 	{
-		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "acct:alice@alice.com")).andExpectAll(
-			status().isOk(),
-			content().contentType("application/jrd+json"),
-			content().json("""
-				{
-					"subject": "acct:alice@alice.com"
-				}
-			""")
-		);
+		mvc.perform(get("/.well-known/webfinger")
+				.queryParam("resource", "acct:alice@alice.com")
+				.header("X-Forwarded-Host", "alice.com")
+			)
+			.andExpectAll(
+				status().isOk(),
+				content().contentType("application/jrd+json"),
+				content().json("""
+					{
+						"subject": "acct:alice@alice.com"
+					}
+				""")
+			);
 	}
 	
 	@Test
@@ -45,5 +49,15 @@ public class DiscoverUserIT
 	{
 		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "acct:alice"))
 			.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void cannotDiscoverUserForDifferentServer() throws Exception
+	{
+		mvc.perform(get("/.well-known/webfinger")
+				.queryParam("resource", "acct:alice@bob.com")
+				.header("X-Forwarded-Host", "alice.com")
+			)
+			.andExpect(status().isNotFound());
 	}
 }
