@@ -39,6 +39,8 @@ public class ActorController
 			.build()
 			.toUri();
 		
-		return new Actor(ActivityStreams.CONTEXT, id, Actor.PERSON_TYPE, user.name());
+		var inboxUrl = MvcUriComponentsBuilder.fromController(InboxController.class).build(user.name());
+		
+		return new Actor(ActivityStreams.CONTEXT, id, Actor.PERSON_TYPE, inboxUrl, user.name());
 	}
 }
