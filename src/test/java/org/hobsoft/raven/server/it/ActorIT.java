@@ -32,7 +32,7 @@ public class ActorIT
 			content().json("""
 				{
 					"@context": "https://www.w3.org/ns/activitystreams",
-					"id": "http://social.example/alice/",
+					"id": "http://social.example/alice",
 					"type": "Person",
 					"inbox": "http://social.example/alice/inbox",
 					"preferredUsername": "alice"

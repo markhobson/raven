@@ -40,7 +40,7 @@ public class DiscoverUserIT
 							{
 								"rel": "self",
 								"type": "application/activity+json",
-								"href": "http://social.example/alice/"
+								"href": "http://social.example/alice"
 							}
 						]
 					}

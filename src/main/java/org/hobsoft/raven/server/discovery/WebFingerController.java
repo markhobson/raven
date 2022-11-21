@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.controller;
-
 @RestController
 @RequestMapping(".well-known/webfinger")
 public class WebFingerController
@@ -72,8 +70,7 @@ public class WebFingerController
 	
 	private static ResourceDescriptor toResourceDescriptor(URI resource, User user)
 	{
-		var actorUri = MvcUriComponentsBuilder.fromMethodCall(controller(ActorController.class).get(user.name()))
-			.toUriString();
+		var actorUri = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name()).toString();
 		
 		return new ResourceDescriptor(resource, List.of(
 			new Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.controller;
-
 @RestController
 @RequestMapping("{username}")
 public class ActorController
@@ -35,10 +33,7 @@ public class ActorController
 	
 	private static Actor toActor(User user)
 	{
-		var id = MvcUriComponentsBuilder.fromMethodCall(controller(ActorController.class).get(user.name()))
-			.build()
-			.toUri();
-		
+		var id = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		var inboxUrl = MvcUriComponentsBuilder.fromController(InboxController.class).build(user.name());
 		
 		return new Actor(ActivityStreams.CONTEXT, id, Actor.PERSON_TYPE, inboxUrl, user.name());
