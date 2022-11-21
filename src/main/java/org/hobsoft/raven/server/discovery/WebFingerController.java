@@ -3,6 +3,7 @@ package org.hobsoft.raven.server.discovery;
 import java.net.URI;
 import java.util.List;
 
+import org.hobsoft.raven.server.ActivityStreams;
 import org.hobsoft.raven.server.ActorController;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
@@ -22,8 +23,6 @@ public class WebFingerController
 	private static final String ACCT_SCHEME = "acct";
 	
 	private static final String APPLICATION_JRD_JSON_VALUE = "application/jrd+json";
-	
-	private static final String APPLICATION_ACTIVITY_JSON_VALUE = "application/activity+json";
 	
 	private static final String REL_SELF = "self";
 	
@@ -77,7 +76,7 @@ public class WebFingerController
 			.toUriString();
 		
 		return new ResourceDescriptor(resource, List.of(
-			new Link(REL_SELF, APPLICATION_ACTIVITY_JSON_VALUE, actorUri)
+			new Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)
 		));
 	}
 }
