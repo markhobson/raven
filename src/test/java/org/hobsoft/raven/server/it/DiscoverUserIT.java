@@ -32,20 +32,20 @@ public class DiscoverUserIT
 		when(userRepository.findByName("alice")).thenReturn(new User("alice"));
 		
 		mvc.perform(get("/.well-known/webfinger")
-				.queryParam("resource", "acct:alice@alice.com")
-				.header("X-Forwarded-Host", "alice.com")
+				.queryParam("resource", "acct:alice@social.example")
+				.header("X-Forwarded-Host", "social.example")
 			)
 			.andExpectAll(
 				status().isOk(),
 				content().contentType("application/jrd+json"),
 				content().json("""
 					{
-						"subject": "acct:alice@alice.com",
+						"subject": "acct:alice@social.example",
 						"links": [
 							{
 								"rel": "self",
 								"type": "application/activity+json",
-								"href": "http://alice.com/alice/"
+								"href": "http://social.example/alice/"
 							}
 						]
 					}
@@ -56,7 +56,7 @@ public class DiscoverUserIT
 	@Test
 	public void cannotDiscoverResourceForDifferentScheme() throws Exception
 	{
-		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "mailto:alice@alice.com"))
+		mvc.perform(get("/.well-known/webfinger").queryParam("resource", "mailto:alice@social.example"))
 			.andExpect(status().isNotFound());
 	}
 	
@@ -71,8 +71,8 @@ public class DiscoverUserIT
 	public void cannotDiscoverUserForDifferentServer() throws Exception
 	{
 		mvc.perform(get("/.well-known/webfinger")
-				.queryParam("resource", "acct:alice@bob.com")
-				.header("X-Forwarded-Host", "alice.com")
+				.queryParam("resource", "acct:alice@chatty.example")
+				.header("X-Forwarded-Host", "social.example")
 			)
 			.andExpect(status().isNotFound());
 	}
@@ -81,8 +81,8 @@ public class DiscoverUserIT
 	public void cannotDiscoverUserForUnknownUser() throws Exception
 	{
 		mvc.perform(get("/.well-known/webfinger")
-				.queryParam("resource", "acct:alice@alice.com")
-				.header("X-Forwarded-Host", "alice.com")
+				.queryParam("resource", "acct:alice@social.example")
+				.header("X-Forwarded-Host", "social.example")
 			)
 			.andExpect(status().isNotFound());
 	}
