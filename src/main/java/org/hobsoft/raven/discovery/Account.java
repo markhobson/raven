@@ -1,4 +1,4 @@
-package org.hobsoft.raven.webfinger;
+package org.hobsoft.raven.discovery;
 
 public record Account(String user, String host)
 {

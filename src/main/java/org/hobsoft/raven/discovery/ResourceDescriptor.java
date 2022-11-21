@@ -1,4 +1,4 @@
-package org.hobsoft.raven.webfinger;
+package org.hobsoft.raven.discovery;
 
 import java.net.URI;
 
