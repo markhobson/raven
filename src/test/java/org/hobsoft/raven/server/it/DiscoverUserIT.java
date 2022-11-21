@@ -1,4 +1,4 @@
-package org.hobsoft.raven.it;
+package org.hobsoft.raven.server.it;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

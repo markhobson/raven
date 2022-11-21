@@ -1,4 +1,4 @@
-package org.hobsoft.raven.discovery;
+package org.hobsoft.raven.server.discovery;
 
 public record Account(String user, String host)
 {
