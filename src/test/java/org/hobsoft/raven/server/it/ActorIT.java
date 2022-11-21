@@ -33,7 +33,8 @@ public class ActorIT
 				{
 					"@context": "https://www.w3.org/ns/activitystreams",
 					"id": "http://social.example/alice/",
-					"type": "Person"
+					"type": "Person",
+					"preferredUsername": "alice"
 				}
 			""")
 		);

@@ -39,6 +39,6 @@ public class ActorController
 			.build()
 			.toUri();
 		
-		return new Actor(ActivityStreams.CONTEXT, id, Actor.PERSON_TYPE);
+		return new Actor(ActivityStreams.CONTEXT, id, Actor.PERSON_TYPE, user.name());
 	}
 }
