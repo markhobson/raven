@@ -70,7 +70,7 @@ public class WebFingerController
 	
 	private static ResourceDescriptor toResourceDescriptor(URI resource, User user)
 	{
-		var actorUri = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name()).toString();
+		var actorUri = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		
 		return new ResourceDescriptor(resource, List.of(
 			new Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)
