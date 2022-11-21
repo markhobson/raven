@@ -1,13 +1,19 @@
 package org.hobsoft.raven.server.discovery;
 
 import java.net.URI;
+import java.util.List;
 
+import org.hobsoft.raven.server.ActorController;
+import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.controller;
 
 @RestController
 @RequestMapping(".well-known/webfinger")
@@ -16,6 +22,10 @@ public class WebFingerController
 	private static final String ACCT_SCHEME = "acct";
 	
 	private static final String APPLICATION_JRD_JSON_VALUE = "application/jrd+json";
+	
+	private static final String APPLICATION_ACTIVITY_JSON_VALUE = "application/activity+json";
+	
+	private static final String REL_SELF = "self";
 	
 	private final UserRepository userRepository;
 	
@@ -58,6 +68,16 @@ public class WebFingerController
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(new ResourceDescriptor(resource));
+		return ResponseEntity.ok(toResourceDescriptor(resource, user));
+	}
+	
+	private static ResourceDescriptor toResourceDescriptor(URI resource, User user)
+	{
+		var actorUri = MvcUriComponentsBuilder.fromMethodCall(controller(ActorController.class).get(user.name()))
+			.toUriString();
+		
+		return new ResourceDescriptor(resource, List.of(
+			new Link(REL_SELF, APPLICATION_ACTIVITY_JSON_VALUE, actorUri)
+		));
 	}
 }

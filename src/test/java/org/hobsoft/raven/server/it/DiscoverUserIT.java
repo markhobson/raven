@@ -40,7 +40,14 @@ public class DiscoverUserIT
 				content().contentType("application/jrd+json"),
 				content().json("""
 					{
-						"subject": "acct:alice@alice.com"
+						"subject": "acct:alice@alice.com",
+						"links": [
+							{
+								"rel": "self",
+								"type": "application/activity+json",
+								"href": "http://alice.com/alice/"
+							}
+						]
 					}
 				""")
 			);
