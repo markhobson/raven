@@ -37,7 +37,7 @@ public class WebFingerController
 		}
 		
 		// validate host
-		String host = ServletUriComponentsBuilder.fromCurrentServletMapping().build().getHost();
+		var host = ServletUriComponentsBuilder.fromCurrentServletMapping().build().getHost();
 		if (!account.host().equals(host))
 		{
 			return ResponseEntity.notFound().build();
