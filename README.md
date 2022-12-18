@@ -29,6 +29,27 @@ actor:
 }
 ```
 
+### Actors
+
+Each user exists as an [ActivityPub Actor](https://www.w3.org/TR/activitypub/#actors):
+
+```bash
+curl https://social.example/alice
+```
+
+They are represented as an [ActivityStreams Actor](https://www.w3.org/TR/activitystreams-core/#actors) using
+[JSON-LD](https://www.w3.org/TR/json-ld/) with an [ActivityStream context](https://www.w3.org/ns/activitystreams):
+
+```json
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://social.example/alice",
+  "type": "Person",
+  "inbox": "https://social.example/alice/inbox",
+  "preferredUsername": "alice"
+}
+```
+
 ## Building
 
 To build the server:
