@@ -10,5 +10,6 @@ public final class ActivityStreams
 	
 	private ActivityStreams()
 	{
+		throw new AssertionError();
 	}
 }
