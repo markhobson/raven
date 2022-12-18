@@ -9,8 +9,6 @@ Social media server.
 Uses [WebFinger](https://www.rfc-editor.org/rfc/rfc7033) with [acct](https://www.rfc-editor.org/rfc/rfc7565) resources
 to discover users.
 
-[![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
-
 ## Building
 
 To build the server:
@@ -31,3 +29,5 @@ Or to run the server locally using Docker on port 80:
 docker build -t raven-server .
 docker run --rm -p80:80 raven-server
 ```
+
+[![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
