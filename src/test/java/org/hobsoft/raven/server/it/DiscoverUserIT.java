@@ -24,7 +24,7 @@ public class DiscoverUserIT
 	@Test
 	public void canDiscoverUser() throws Exception
 	{
-		when(userRepository.findByName("alice")).thenReturn(new User("alice"));
+		when(userRepository.findByName("alice")).thenReturn(new User("alice", null));
 		
 		mvc.perform(get("/.well-known/webfinger")
 				.queryParam("resource", "acct:alice@social.example")

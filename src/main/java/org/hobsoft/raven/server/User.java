@@ -1,5 +1,7 @@
 package org.hobsoft.raven.server;
 
-public record User(String name)
+import java.security.KeyPair;
+
+public record User(String name, KeyPair keyPair)
 {
 }

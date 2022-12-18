@@ -1,5 +1,10 @@
 package org.hobsoft.raven.server.it;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Base64;
+
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -7,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -24,18 +30,29 @@ public class ActorIT
 	@Test
 	public void canGetActor() throws Exception
 	{
-		when(userRepository.findByName("alice")).thenReturn(new User("alice"));
+		var publicKey = mock(PublicKey.class);
+		when(publicKey.getEncoded()).thenReturn(Base64.getDecoder().decode("ABCD"));
+		var keyPair = new KeyPair(publicKey, mock(PrivateKey.class));
+		when(userRepository.findByName("alice")).thenReturn(new User("alice", keyPair));
 		
 		mvc.perform(get("/alice/").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),
 			content().contentType("application/activity+json"),
 			content().json("""
 				{
-					"@context": "https://www.w3.org/ns/activitystreams",
+					"@context": [
+						"https://www.w3.org/ns/activitystreams",
+						"https://w3id.org/security/v1"
+					],
 					"id": "http://social.example/alice",
 					"type": "Person",
 					"inbox": "http://social.example/alice/inbox",
-					"preferredUsername": "alice"
+					"preferredUsername": "alice",
+					"publicKey": {
+						"id": "http://social.example/alice#main-key",
+						"owner": "http://social.example/alice",
+						"publicKeyPem": "-----BEGIN PUBLIC KEY-----\\nABCD\\n-----END PUBLIC KEY-----\\n"
+					}
 				}
 			""")
 		);

@@ -42,13 +42,25 @@ They are represented as an [ActivityStreams Actor](https://www.w3.org/TR/activit
 
 ```json
 {
-  "@context": "https://www.w3.org/ns/activitystreams",
+  "@context": [
+      "https://www.w3.org/ns/activitystreams",
+      "https://w3id.org/security/v1"
+  ],
   "id": "https://social.example/alice",
   "type": "Person",
   "inbox": "https://social.example/alice/inbox",
-  "preferredUsername": "alice"
+  "preferredUsername": "alice",
+  "publicKey": {
+    "id": "https://social.example/alice#main-key",
+    "owner": "https://social.example/alice",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----\n"
+  }
 }
 ```
+
+The user's public key is also provided via the [Security context](https://web-payments.org/vocabs/security) for
+signature verification, as recommended by [Authentication and Authorization best
+practices](https://www.w3.org/wiki/SocialCG/ActivityPub/Authentication_Authorization). 
 
 ## Building
 
