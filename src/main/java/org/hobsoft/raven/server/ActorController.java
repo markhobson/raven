@@ -20,7 +20,7 @@ public class ActorController
 		this.userRepository = userRepository;
 	}
 	
-	@GetMapping(produces = ActivityStreams.MIME_TYPE)
+	@GetMapping(produces = Activity.MIME_TYPE)
 	public ResponseEntity<Actor> get(@PathVariable String username)
 	{
 		// validate user
@@ -35,7 +35,7 @@ public class ActorController
 	
 	private static Actor toActor(User user)
 	{
-		var contexts = List.of(ActivityStreams.CONTEXT, Security.CONTEXT);
+		var contexts = List.of(Activity.CONTEXT, Security.CONTEXT);
 		var actorId = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		var inboxUrl = MvcUriComponentsBuilder.fromController(InboxController.class).build(user.name());
 		var publicKeyId = actorId.resolve("#main-key");

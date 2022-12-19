@@ -3,7 +3,7 @@ package org.hobsoft.raven.server.discovery;
 import java.net.URI;
 import java.util.List;
 
-import org.hobsoft.raven.server.ActivityStreams;
+import org.hobsoft.raven.server.Activity;
 import org.hobsoft.raven.server.ActorController;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
@@ -73,7 +73,7 @@ public class WebFingerController
 		var actorUri = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		
 		return new ResourceDescriptor(resource, List.of(
-			new ResourceDescriptor.Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)
+			new ResourceDescriptor.Link(REL_SELF, Activity.MIME_TYPE, actorUri)
 		));
 	}
 }
