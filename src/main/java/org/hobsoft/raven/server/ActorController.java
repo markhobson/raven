@@ -21,7 +21,7 @@ public class ActorController
 	}
 	
 	@GetMapping(produces = Activity.MIME_TYPE)
-	public ResponseEntity<Actor> get(@PathVariable String username)
+	public ResponseEntity<Activity.Actor> get(@PathVariable String username)
 	{
 		// validate user
 		var user = userRepository.findByName(username);
@@ -33,7 +33,7 @@ public class ActorController
 		return ResponseEntity.ok(toActor(user));
 	}
 	
-	private static Actor toActor(User user)
+	private static Activity.Actor toActor(User user)
 	{
 		var contexts = List.of(Activity.CONTEXT, Security.CONTEXT);
 		var actorId = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
@@ -41,6 +41,6 @@ public class ActorController
 		var publicKeyId = actorId.resolve("#main-key");
 		var publicKey = new Security.PublicKey(publicKeyId, actorId, Keys.toPem(user.keyPair().getPublic()));
 		
-		return new Actor(contexts, actorId, Actor.PERSON_TYPE, inboxUrl, user.name(), publicKey);
+		return new Activity.Actor(contexts, actorId, Activity.Actor.PERSON_TYPE, inboxUrl, user.name(), publicKey);
 	}
 }
