@@ -73,7 +73,7 @@ public class WebFingerController
 		var actorUri = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		
 		return new ResourceDescriptor(resource, List.of(
-			new Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)
+			new ResourceDescriptor.Link(REL_SELF, ActivityStreams.MIME_TYPE, actorUri)
 		));
 	}
 }
