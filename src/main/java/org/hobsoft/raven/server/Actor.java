@@ -16,7 +16,7 @@ public record Actor(
 	String type,
 	URI inbox,
 	String preferredUsername,
-	PublicKey publicKey
+	Security.PublicKey publicKey
 )
 {
 	public static final String PERSON_TYPE = "Person";

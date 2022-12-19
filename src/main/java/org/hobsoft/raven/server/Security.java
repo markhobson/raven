@@ -10,4 +10,8 @@ public final class Security
 	}
 	
 	public static final URI CONTEXT = URI.create("https://w3id.org/security/v1");
+	
+	public record PublicKey(URI id, URI owner, String publicKeyPem)
+	{
+	}
 }

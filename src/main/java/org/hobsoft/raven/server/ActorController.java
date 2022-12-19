@@ -39,7 +39,7 @@ public class ActorController
 		var actorId = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
 		var inboxUrl = MvcUriComponentsBuilder.fromController(InboxController.class).build(user.name());
 		var publicKeyId = actorId.resolve("#main-key");
-		var publicKey = new PublicKey(publicKeyId, actorId, Keys.toPem(user.keyPair().getPublic()));
+		var publicKey = new Security.PublicKey(publicKeyId, actorId, Keys.toPem(user.keyPair().getPublic()));
 		
 		return new Actor(contexts, actorId, Actor.PERSON_TYPE, inboxUrl, user.name(), publicKey);
 	}
