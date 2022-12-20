@@ -37,10 +37,12 @@ public class ActorController
 	{
 		var contexts = List.of(Activity.CONTEXT, Security.CONTEXT);
 		var actorId = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
+		var type = Activity.Actor.PERSON_TYPE;
 		var inboxUrl = MvcUriComponentsBuilder.fromController(InboxController.class).build(user.name());
+		var outboxUrl = MvcUriComponentsBuilder.fromController(OutboxController.class).build(user.name());
 		var publicKeyId = actorId.resolve("#main-key");
 		var publicKey = new Security.PublicKey(publicKeyId, actorId, Keys.toPem(user.keyPair().getPublic()));
 		
-		return new Activity.Actor(contexts, actorId, Activity.Actor.PERSON_TYPE, inboxUrl, user.name(), publicKey);
+		return new Activity.Actor(contexts, actorId, type, inboxUrl, outboxUrl, user.name(), publicKey);
 	}
 }

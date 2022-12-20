@@ -47,6 +47,7 @@ public class ActorIT
 					"id": "http://social.example/alice",
 					"type": "Person",
 					"inbox": "http://social.example/alice/inbox",
+					"outbox": "http://social.example/alice/outbox",
 					"preferredUsername": "alice",
 					"publicKey": {
 						"id": "http://social.example/alice#main-key",

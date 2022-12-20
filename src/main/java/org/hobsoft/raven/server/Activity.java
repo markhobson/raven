@@ -31,6 +31,7 @@ public final class Activity
 		URI id,
 		String type,
 		URI inbox,
+		URI outbox,
 		String preferredUsername,
 		Security.PublicKey publicKey
 	)
