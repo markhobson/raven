@@ -12,9 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("{username}/outbox")
 public class OutboxController
 {
+	private final UserRepository userRepository;
+	
+	public OutboxController(UserRepository userRepository)
+	{
+		this.userRepository = userRepository;
+	}
+	
 	@GetMapping(produces = Activity.MIME_TYPE)
 	public ResponseEntity<Activity.OrderedCollection> get(@PathVariable String username)
 	{
+		// validate user
+		var user = userRepository.findByName(username);
+		if (user == null)
+		{
+			return ResponseEntity.notFound().build();
+		}
+		
 		var orderedItems = Collections.<Activity.AbstractObject>emptyList();
 		
 		return ResponseEntity.ok(Activity.OrderedCollection.of(orderedItems));
