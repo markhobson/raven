@@ -70,9 +70,9 @@ public final class Activity
 	{
 		public static final String TYPE = "OrderedCollection";
 		
-		public static Activity.OrderedCollection of(List<? extends AbstractObject> orderedItems)
+		public static OrderedCollection of(List<? extends AbstractObject> orderedItems)
 		{
-			return new Activity.OrderedCollection(List.of(CONTEXT), TYPE, orderedItems.size(), orderedItems);
+			return new OrderedCollection(List.of(CONTEXT), TYPE, orderedItems.size(), orderedItems);
 		}
 	}
 }
