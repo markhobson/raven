@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
+import java.util.Collections;
 
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
@@ -33,7 +34,7 @@ public class ActorIT
 		var publicKey = mock(PublicKey.class);
 		when(publicKey.getEncoded()).thenReturn(Base64.getDecoder().decode("ABCD"));
 		var keyPair = new KeyPair(publicKey, mock(PrivateKey.class));
-		when(userRepository.findByName("alice")).thenReturn(new User("alice", keyPair));
+		when(userRepository.findByName("alice")).thenReturn(new User("alice", keyPair, Collections.emptyList()));
 		
 		mvc.perform(get("/alice/").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),

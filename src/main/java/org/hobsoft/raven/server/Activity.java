@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -36,6 +37,9 @@ public final class Activity
 		List<URI> contexts();
 		
 		String type();
+		
+		@JsonInclude(JsonInclude.Include.NON_NULL)
+		String content();
 	}
 	
 	/**
@@ -47,6 +51,7 @@ public final class Activity
 		List<URI> contexts,
 		URI id,
 		String type,
+		String content,
 		URI inbox,
 		URI outbox,
 		String preferredUsername,
@@ -64,6 +69,7 @@ public final class Activity
 	public record OrderedCollection(
 		List<URI> contexts,
 		String type,
+		String content,
 		int totalItems,
 		List<? extends AbstractObject> orderedItems
 	) implements AbstractObject
@@ -72,7 +78,56 @@ public final class Activity
 		
 		public static OrderedCollection of(List<? extends AbstractObject> orderedItems)
 		{
-			return new OrderedCollection(List.of(CONTEXT), TYPE, orderedItems.size(), orderedItems);
+			return new OrderedCollection(List.of(CONTEXT), TYPE, null, orderedItems.size(), orderedItems);
+		}
+	}
+	
+	/**
+	 * ActivityStreams activity.
+	 *
+	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-activity">Activity</a>
+	 */
+	public interface AbstractActivity extends AbstractObject
+	{
+		String TYPE = "Activity";
+		
+		URI actor();
+		
+		AbstractObject object();
+	}
+	
+	/**
+	 * ActivityStreams create activity.
+	 *
+	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-create">Create</a>
+	 */
+	public record Create(
+		List<URI> contexts,
+		String type,
+		String content,
+		URI actor,
+		AbstractObject object
+	) implements AbstractActivity
+	{
+		public static final String TYPE = "Create";
+		
+		public static Create of(URI actor, AbstractObject object)
+		{
+			return new Create(List.of(CONTEXT), TYPE, null, actor, object);
+		}
+	}
+	
+	public record Note(
+		List<URI> contexts,
+		String type,
+		String content
+	) implements AbstractObject
+	{
+		public static final String TYPE = "Note";
+		
+		public static Note of(String content)
+		{
+			return new Note(List.of(CONTEXT), TYPE, content);
 		}
 	}
 }

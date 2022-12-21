@@ -1,12 +1,11 @@
 package org.hobsoft.raven.server;
 
-import java.util.Collections;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 @RestController
 @RequestMapping("{username}/outbox")
@@ -29,8 +28,12 @@ public class OutboxController
 			return ResponseEntity.notFound().build();
 		}
 		
-		var orderedItems = Collections.<Activity.AbstractObject>emptyList();
+		var actorUrl = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
+		var activities = user.notes().stream()
+			.map(note -> Activity.Note.of(note.content()))
+			.map(note -> Activity.Create.of(actorUrl, note))
+			.toList();
 		
-		return ResponseEntity.ok(Activity.OrderedCollection.of(orderedItems));
+		return ResponseEntity.ok(Activity.OrderedCollection.of(activities));
 	}
 }

@@ -43,6 +43,6 @@ public class ActorController
 		var publicKeyId = actorId.resolve("#main-key");
 		var publicKey = new Security.PublicKey(publicKeyId, actorId, Keys.toPem(user.keyPair().getPublic()));
 		
-		return new Activity.Actor(contexts, actorId, type, inboxUrl, outboxUrl, user.name(), publicKey);
+		return new Activity.Actor(contexts, actorId, type, null, inboxUrl, outboxUrl, user.name(), publicKey);
 	}
 }

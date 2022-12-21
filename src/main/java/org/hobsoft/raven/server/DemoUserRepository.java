@@ -3,6 +3,7 @@ package org.hobsoft.raven.server;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ public class DemoUserRepository implements UserRepository
 	
 	public DemoUserRepository()
 	{
-		users = Map.of("mark", new User("mark", generateKeyPair()));
+		users = Map.of("mark", new User("mark", generateKeyPair(), List.of(new Note("Up early and feel great!"))));
 	}
 	
 	@Override

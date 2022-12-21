@@ -1,5 +1,9 @@
 package org.hobsoft.raven.server.it;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.hobsoft.raven.server.Note;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -22,9 +26,9 @@ public class OutboxIT
 	private MockMvc mvc;
 	
 	@Test
-	public void canGetOutbox() throws Exception
+	public void canGetEmptyOutbox() throws Exception
 	{
-		when(userRepository.findByName("alice")).thenReturn(new User("alice", null));
+		when(userRepository.findByName("alice")).thenReturn(new User("alice", null, Collections.emptyList()));
 		
 		mvc.perform(get("/alice/outbox")).andExpectAll(
 			status().isOk(),
@@ -35,6 +39,36 @@ public class OutboxIT
 					"type": "OrderedCollection",
 					"totalItems": 0,
 					"orderedItems": []
+				}
+			""")
+		);
+	}
+	
+	@Test
+	public void canGetOutboxActivity() throws Exception
+	{
+		when(userRepository.findByName("alice")).thenReturn(new User("alice", null, List.of(new Note("Hello world"))));
+		
+		mvc.perform(get("/alice/outbox").header("X-Forwarded-Host", "social.example")).andExpectAll(
+			status().isOk(),
+			content().contentType("application/activity+json"),
+			content().json("""
+				{
+					"@context": "https://www.w3.org/ns/activitystreams",
+					"type": "OrderedCollection",
+					"totalItems": 1,
+					"orderedItems": [
+						{
+							"@context": "https://www.w3.org/ns/activitystreams",
+							"type": "Create",
+							"actor": "http://social.example/alice",
+							"object": {
+								"@context": "https://www.w3.org/ns/activitystreams",
+								"type": "Note",
+								"content": "Hello world"
+							}
+						}
+					]
 				}
 			""")
 		);
