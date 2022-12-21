@@ -56,7 +56,7 @@ public class ActorIT
 						"publicKeyPem": "-----BEGIN PUBLIC KEY-----\\nABCD\\n-----END PUBLIC KEY-----\\n"
 					}
 				}
-			""")
+			""", true)
 		);
 	}
 

@@ -40,7 +40,7 @@ public class OutboxIT
 					"totalItems": 0,
 					"orderedItems": []
 				}
-			""")
+			""", true)
 		);
 	}
 	
@@ -70,7 +70,7 @@ public class OutboxIT
 						}
 					]
 				}
-			""")
+			""", true)
 		);
 	}
 	
