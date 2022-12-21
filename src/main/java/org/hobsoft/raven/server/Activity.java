@@ -1,6 +1,7 @@
 package org.hobsoft.raven.server;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,6 +35,7 @@ public final class Activity
 		
 		@JsonProperty("@context")
 		@JsonFormat(with = JsonFormat.Feature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
+		@JsonInclude(JsonInclude.Include.NON_EMPTY)
 		List<URI> contexts();
 		
 		String type();
@@ -113,7 +115,7 @@ public final class Activity
 		
 		public static Create of(URI actor, AbstractObject object)
 		{
-			return new Create(List.of(CONTEXT), TYPE, null, actor, object);
+			return new Create(Collections.emptyList(), TYPE, null, actor, object);
 		}
 	}
 	
@@ -127,7 +129,7 @@ public final class Activity
 		
 		public static Note of(String content)
 		{
-			return new Note(List.of(CONTEXT), TYPE, content);
+			return new Note(Collections.emptyList(), TYPE, content);
 		}
 	}
 }

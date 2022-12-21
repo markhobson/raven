@@ -59,11 +59,9 @@ public class OutboxIT
 					"totalItems": 1,
 					"orderedItems": [
 						{
-							"@context": "https://www.w3.org/ns/activitystreams",
 							"type": "Create",
 							"actor": "http://social.example/alice",
 							"object": {
-								"@context": "https://www.w3.org/ns/activitystreams",
 								"type": "Note",
 								"content": "Hello world"
 							}
