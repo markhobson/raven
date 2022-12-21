@@ -65,12 +65,12 @@ public final class Activity
 		List<URI> contexts,
 		String type,
 		int totalItems,
-		List<AbstractObject> orderedItems
+		List<? extends AbstractObject> orderedItems
 	) implements AbstractObject
 	{
 		public static final String TYPE = "OrderedCollection";
 		
-		public static Activity.OrderedCollection of(List<AbstractObject> orderedItems)
+		public static Activity.OrderedCollection of(List<? extends AbstractObject> orderedItems)
 		{
 			return new Activity.OrderedCollection(List.of(CONTEXT), TYPE, orderedItems.size(), orderedItems);
 		}
