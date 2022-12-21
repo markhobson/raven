@@ -3,6 +3,7 @@ package org.hobsoft.raven.server;
 import java.net.URI;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -22,19 +23,35 @@ public final class Activity
 	}
 	
 	/**
+	 * ActivityStreams object.
+	 *
+	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object">Object</a>
+	 */
+	public interface AbstractObject
+	{
+		String TYPE = "Object";
+		
+		@JsonProperty("@context")
+		@JsonFormat(with = JsonFormat.Feature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
+		List<URI> contexts();
+		
+		String type();
+	}
+	
+	/**
 	 * ActivityPub actor.
 	 *
 	 * @see <a href="https://www.w3.org/TR/activitypub/#actor-objects">Actors</a>
 	 */
 	public record Actor(
-		@JsonProperty("@context") List<URI> contexts,
+		List<URI> contexts,
 		URI id,
 		String type,
 		URI inbox,
 		URI outbox,
 		String preferredUsername,
 		Security.PublicKey publicKey
-	)
+	) implements AbstractObject
 	{
 		public static final String PERSON_TYPE = "Person";
 	}
@@ -45,17 +62,17 @@ public final class Activity
 	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">OrderedCollection</a>
 	 */
 	public record OrderedCollection(
-		@JsonProperty("@context") URI context,
+		List<URI> contexts,
 		String type,
 		int totalItems,
-		List<Object> orderedItems
-	)
+		List<AbstractObject> orderedItems
+	) implements AbstractObject
 	{
 		public static final String TYPE = "OrderedCollection";
 		
-		public static Activity.OrderedCollection of(List<Object> orderedItems)
+		public static Activity.OrderedCollection of(List<AbstractObject> orderedItems)
 		{
-			return new Activity.OrderedCollection(CONTEXT, TYPE, orderedItems.size(), orderedItems);
+			return new Activity.OrderedCollection(List.of(CONTEXT), TYPE, orderedItems.size(), orderedItems);
 		}
 	}
 }

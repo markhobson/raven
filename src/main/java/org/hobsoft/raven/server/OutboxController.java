@@ -15,7 +15,7 @@ public class OutboxController
 	@GetMapping(produces = Activity.MIME_TYPE)
 	public ResponseEntity<Activity.OrderedCollection> get(@PathVariable String username)
 	{
-		var orderedItems = Collections.emptyList();
+		var orderedItems = Collections.<Activity.AbstractObject>emptyList();
 		
 		return ResponseEntity.ok(Activity.OrderedCollection.of(orderedItems));
 	}
