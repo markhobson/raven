@@ -83,4 +83,10 @@ docker build -t raven-server .
 docker run --rm -p80:80 raven-server
 ```
 
+The latest Docker image is also available on [Docker Hub](https://hub.docker.com/r/markhobson/raven-server):
+
+```
+docker run --rm -p80:80 markhobson/raven-server
+```
+
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
