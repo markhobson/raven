@@ -33,5 +33,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          tags: markhobson/raven:latest
+          tags: markhobson/raven-server:latest
           push: true
