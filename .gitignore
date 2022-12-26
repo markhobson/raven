@@ -3,3 +3,9 @@
 
 # IntelliJ
 /.idea/
+
+# Terraform
+/cloud/.terraform/
+/cloud/terraform.tfstate
+/cloud/terraform.tfstate.backup
+/cloud/terraform.tfvars

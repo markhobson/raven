@@ -89,4 +89,20 @@ The latest Docker image is also available on [Docker Hub](https://hub.docker.com
 docker run --rm -p80:80 markhobson/raven-server
 ```
 
+# Deploying
+
+To deploy the server to [DigitalOcean](https://www.digitalocean.com/):
+
+1. [Create a DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
+2. Create a new file `cloud/terraform.tfvars` and paste the token in as follows:
+   ```
+   do_token = "<api-token>"
+   ```
+3. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
+   ```
+   cd cloud
+   terraform init
+   terraform apply
+   ```
+
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
