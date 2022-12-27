@@ -21,4 +21,5 @@ resource "digitalocean_droplet" "raven-server" {
 	region = "lon1"
 	size = "s-1vcpu-1gb"
 	ssh_keys = [data.digitalocean_ssh_key.root.id]
+	user_data = file("cloud-init.sh")
 }
