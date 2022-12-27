@@ -137,7 +137,16 @@ To deploy the server to [DigitalOcean](https://www.digitalocean.com/):
    terraform init
    terraform apply
    ```
+Once provisioned, the server's IP address will be output:
 
-SSH access to the server is enabled for `root` using your SSH key. 
+```
+id_address = "<ip-address>"
+```
+
+SSH access to the server is enabled for `root` using your SSH key:
+
+```
+ssh root@<ip-address>
+```
 
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
