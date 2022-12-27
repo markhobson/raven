@@ -143,6 +143,8 @@ Once provisioned, the server's IP address will be output:
 id_address = "<ip-address>"
 ```
 
+After starting up, Raven server will be running on `http://<ip-address>`.  
+
 SSH access to the server is enabled for `root` using your SSH key:
 
 ```
