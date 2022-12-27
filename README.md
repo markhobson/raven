@@ -122,16 +122,13 @@ docker run --rm -p80:80 markhobson/raven-server
 To deploy the server to [DigitalOcean](https://www.digitalocean.com/):
 
 1. [Create a DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
-2. Create a new file `cloud/terraform.tfvars` and paste the token in as follows:
+2. [Upload your SSH public key to DigitalOcean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-team/)
+3. Create a new file `cloud/terraform.tfvars` with these details as follows:
    ```
    do_token = "<api-token>"
-   ```                     
-3. [Upload your SSH public key to DigitalOcean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-team/)
-4. Append your SSH public key name to `cloud/terraform.tfvars`:
-   ```
    ssh_key_name = "<ssh-key-name>"
-   ```
-5. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
+   ```                     
+4. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
    ```
    cd cloud
    terraform init
