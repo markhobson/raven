@@ -5,6 +5,6 @@ variable "do_token" {
 }
 
 variable "ssh_key_name" {
-  description = "DigitalOcean SSH key name"
-  type = string
+	description = "DigitalOcean SSH key name"
+	type = string
 }
