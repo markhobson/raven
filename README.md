@@ -125,12 +125,19 @@ To deploy the server to [DigitalOcean](https://www.digitalocean.com/):
 2. Create a new file `cloud/terraform.tfvars` and paste the token in as follows:
    ```
    do_token = "<api-token>"
+   ```                     
+3. [Upload your SSH public key to DigitalOcean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-team/)
+4. Append your SSH public key name to `cloud/terraform.tfvars`:
    ```
-3. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
+   ssh_key_name = "<ssh-key-name>"
+   ```
+5. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
    ```
    cd cloud
    terraform init
    terraform apply
    ```
+
+SSH access to the server is enabled for `root` using your SSH key. 
 
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
