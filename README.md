@@ -49,6 +49,7 @@ They are represented as an [ActivityStreams Actor](https://www.w3.org/TR/activit
   "id": "https://social.example/alice",
   "type": "Person",
   "inbox": "https://social.example/alice/inbox",
+  "outbox": "https://social.example/alice/outbox",
   "preferredUsername": "alice",
   "publicKey": {
     "id": "https://social.example/alice#main-key",
@@ -61,6 +62,33 @@ They are represented as an [ActivityStreams Actor](https://www.w3.org/TR/activit
 The user's public key is also provided via the [Security context](https://web-payments.org/vocabs/security) for
 signature verification, as recommended by [Authentication and Authorization best
 practices](https://www.w3.org/wiki/SocialCG/ActivityPub/Authentication_Authorization). 
+
+### Activities
+
+A user's published [activities](https://www.w3.org/TR/activitystreams-core/#activities) are available in their actor's
+[outbox](https://www.w3.org/TR/activitypub/#outbox):
+
+```bash
+curl https://social.example/alice/outbox
+```
+
+```json
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "OrderedCollection",
+  "totalItems": 1,
+  "orderedItems": [
+    {
+      "type": "Create",
+      "actor": "http://social.example/alice",
+      "object": {
+        "type": "Note",
+        "content": "Hello world"
+      }
+    }
+  ]
+}
+```
 
 ## Building
 
