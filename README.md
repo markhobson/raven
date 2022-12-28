@@ -138,4 +138,18 @@ To deploy the server to [Fly.io](https://fly.io/):
 
 The server will be running on `https://<app-name>.fly.dev`.
 
+To [configure a custom domain](https://fly.io/docs/app-guides/custom-domains-with-fly/) for the app:
+
+1. Add a CNAME record to your custom domain that points to `<app-name>.fly.dev`
+2. Create the TLS certificate:
+   ```
+   fly certs create <custom-domain>
+   ```
+3. Wait until the following reports that the certificate has been issued:
+   ```
+   fly certs show <custom-domain>
+   ```
+
+The server will be running on `https://<custom-domain>`.
+
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
