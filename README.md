@@ -119,33 +119,23 @@ docker run --rm -p80:80 markhobson/raven-server
 
 # Deploying
 
-To deploy the server to [DigitalOcean](https://www.digitalocean.com/):
+To deploy the server to [Fly.io](https://fly.io/):
 
-1. [Create a DigitalOcean API token](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
-2. [Upload your SSH public key to DigitalOcean](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/to-team/)
-3. Create a new file `cloud/terraform.tfvars` with these details as follows:
+1. [Install flyctl](https://fly.io/docs/hands-on/install-flyctl/)
+2. Create an account with `fly auth signup` or login with `fly auth login`
+3. Create an app:
    ```
-   do_token = "<api-token>"
-   ssh_key_name = "<ssh-key-name>"
-   ```                     
-4. Run [Terraform](https://www.terraform.io/) to provision the infrastructure:
+   fly apps create <app-name>
    ```
-   cd cloud
-   terraform init
-   terraform apply
+4. Deploy the app:
    ```
-Once provisioned, the server's IP address will be output:
+   fly deploy
+   ```
+5. Open the app in a browser:
+   ```
+   fly open
+   ```
 
-```
-id_address = "<ip-address>"
-```
-
-After starting up, Raven server will be running on `http://<ip-address>`.  
-
-SSH access to the server is enabled for `root` using your SSH key:
-
-```
-ssh root@<ip-address>
-```
+The server will be running on `https://<app-name>.fly.dev`.
 
 [![CI](https://github.com/markhobson/raven/actions/workflows/ci.yml/badge.svg)](https://github.com/markhobson/raven/actions/workflows/ci.yml)
