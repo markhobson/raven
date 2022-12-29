@@ -5,11 +5,15 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DemoLoader
 {
+	private static final Logger LOG = LoggerFactory.getLogger(DemoLoader.class);
+
 	public DemoLoader(UserRepository userRepository)
 	{
 		var user = new User("mark", generateKeyPair(), List.of(new Note("Up early and feel great!")));
@@ -18,6 +22,8 @@ public class DemoLoader
 	
 	private static KeyPair generateKeyPair()
 	{
+		LOG.info("Generating key pair");
+		
 		try
 		{
 			var keyPairGenerator = KeyPairGenerator.getInstance("RSA");
