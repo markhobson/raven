@@ -104,17 +104,17 @@ To run the server locally on port 8080:
 mvn spring-boot:run
 ```
 
-Or to run the server locally using Docker on port 80:
+Or to run the server locally using Docker on port 8080:
 
 ```
 docker build -t raven-server .
-docker run --rm -p80:80 raven-server
+docker run --rm -p8080:8080 raven-server
 ```
 
 The latest Docker image is also available on [Docker Hub](https://hub.docker.com/r/markhobson/raven-server):
 
 ```
-docker run --rm -p80:80 markhobson/raven-server
+docker run --rm -p8080:8080 markhobson/raven-server
 ```
 
 # Deploying
