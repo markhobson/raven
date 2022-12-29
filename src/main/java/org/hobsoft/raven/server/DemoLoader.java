@@ -4,24 +4,16 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-@Repository
-public class DemoUserRepository implements UserRepository
+@Component
+public class DemoLoader
 {
-	private final Map<String, User> users;
-	
-	public DemoUserRepository()
+	public DemoLoader(UserRepository userRepository)
 	{
-		users = Map.of("mark", new User("mark", generateKeyPair(), List.of(new Note("Up early and feel great!"))));
-	}
-	
-	@Override
-	public User findByName(String name)
-	{
-		return users.get(name);
+		var user = new User("mark", generateKeyPair(), List.of(new Note("Up early and feel great!")));
+		userRepository.save(user);
 	}
 	
 	private static KeyPair generateKeyPair()
