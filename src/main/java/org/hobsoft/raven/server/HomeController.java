@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController
 {
-	@GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(path = "/", produces = MediaType.TEXT_HTML_VALUE)
 	@ResponseBody
 	public String get()
 	{

@@ -36,7 +36,7 @@ public class ActorIT
 		var keyPair = new KeyPair(publicKey, mock(PrivateKey.class));
 		when(userRepository.findByName("alice")).thenReturn(new User("alice", keyPair, Collections.emptyList()));
 		
-		mvc.perform(get("/alice/").header("X-Forwarded-Host", "social.example")).andExpectAll(
+		mvc.perform(get("/alice").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),
 			content().contentType("application/activity+json"),
 			content().json("""
@@ -63,6 +63,6 @@ public class ActorIT
 	@Test
 	public void cannotGetActorForUnknownUser() throws Exception
 	{
-		mvc.perform(get("/alice/")).andExpect(status().isNotFound());
+		mvc.perform(get("/alice")).andExpect(status().isNotFound());
 	}
 }
