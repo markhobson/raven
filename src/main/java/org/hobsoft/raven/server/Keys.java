@@ -1,5 +1,6 @@
 package org.hobsoft.raven.server;
 
+import java.security.PublicKey;
 import java.util.Base64;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -21,7 +22,7 @@ public final class Keys
 		throw new AssertionError();
 	}
 	
-	public static String toPem(java.security.PublicKey publicKey)
+	public static String toPem(PublicKey publicKey)
 	{
 		var encodedPublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
 		
