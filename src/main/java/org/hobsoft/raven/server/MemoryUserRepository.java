@@ -26,4 +26,10 @@ public class MemoryUserRepository implements UserRepository
 	{
 		users.put(user.name(), user);
 	}
+	
+	@Override
+	public void deleteAll()
+	{
+		users.clear();
+	}
 }

@@ -8,9 +8,9 @@ import java.util.Collections;
 
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.mock;
@@ -22,19 +22,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class ActorIT
 {
-	@MockBean
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private MockMvc mvc;
 
+	@AfterEach
+	public void tearDown()
+	{
+		userRepository.deleteAll();
+	}
+	
 	@Test
 	public void canGetActor() throws Exception
 	{
 		var publicKey = mock(PublicKey.class);
 		when(publicKey.getEncoded()).thenReturn(Base64.getDecoder().decode("ABCD"));
 		var keyPair = new KeyPair(publicKey, mock(PrivateKey.class));
-		when(userRepository.findByName("alice")).thenReturn(new User("alice", keyPair, Collections.emptyList()));
+		userRepository.save(new User("alice", keyPair, Collections.emptyList()));
 		
 		mvc.perform(get("/alice").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),
