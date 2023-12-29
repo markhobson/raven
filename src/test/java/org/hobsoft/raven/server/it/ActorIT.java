@@ -1,11 +1,10 @@
 package org.hobsoft.raven.server.it;
 
 import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Base64;
 import java.util.Collections;
 
+import org.hobsoft.raven.server.TestKeys;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,9 +34,8 @@ public class ActorIT
 	@Test
 	public void canGetActor() throws Exception
 	{
-		var publicKey = mock(PublicKey.class);
-		when(publicKey.getEncoded()).thenReturn(Base64.getDecoder().decode("ABCD"));
-		var keyPair = new KeyPair(publicKey, mock(PrivateKey.class));
+		var publicKey = TestKeys.publicKey("alg", "fmt", Base64.getDecoder().decode("ABCD"));
+		var keyPair = new KeyPair(publicKey, TestKeys.privateKey("alg", "fmt", new byte[0]));
 		userRepository.save(new User("alice", keyPair, Collections.emptyList()));
 		
 		mvc.perform(get("/alice").header("X-Forwarded-Host", "social.example")).andExpectAll(
