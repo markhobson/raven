@@ -1,7 +1,5 @@
 package org.hobsoft.raven.server.it;
 
-import java.util.Collections;
-
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +29,7 @@ public class DiscoverUserIT
 	@Test
 	public void canDiscoverUser() throws Exception
 	{
-		userRepository.save(new User("alice", null, Collections.emptyList()));
+		userRepository.save(new User("alice", null));
 		
 		mvc.perform(get("/.well-known/webfinger")
 				.queryParam("resource", "acct:alice@social.example")

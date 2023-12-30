@@ -1,9 +1,7 @@
 package org.hobsoft.raven.server.it;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.hobsoft.raven.server.Note;
+import org.hobsoft.raven.server.NoteRepository;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -22,18 +20,22 @@ public class OutboxIT
 	private UserRepository userRepository;
 	
 	@Autowired
+	private NoteRepository noteRepository;
+	
+	@Autowired
 	private MockMvc mvc;
 	
 	@AfterEach
 	public void tearDown()
 	{
+		noteRepository.deleteAll();
 		userRepository.deleteAll();
 	}
 	
 	@Test
 	public void canGetEmptyOutbox() throws Exception
 	{
-		userRepository.save(new User("alice", null, Collections.emptyList()));
+		userRepository.save(new User("alice", null));
 		
 		mvc.perform(get("/alice/outbox")).andExpectAll(
 			status().isOk(),
@@ -52,7 +54,8 @@ public class OutboxIT
 	@Test
 	public void canGetOutboxActivity() throws Exception
 	{
-		userRepository.save(new User("alice", null, List.of(new Note("Hello world"))));
+		userRepository.save(new User("alice", null));
+		noteRepository.save("alice", new Note("Hello world"));
 		
 		mvc.perform(get("/alice/outbox").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),

@@ -13,9 +13,12 @@ public class OutboxController
 {
 	private final UserRepository userRepository;
 	
-	public OutboxController(UserRepository userRepository)
+	private final NoteRepository noteRepository;
+	
+	public OutboxController(UserRepository userRepository, NoteRepository noteRepository)
 	{
 		this.userRepository = userRepository;
+		this.noteRepository = noteRepository;
 	}
 	
 	@GetMapping(produces = Activity.MIME_TYPE)
@@ -29,7 +32,8 @@ public class OutboxController
 		}
 		
 		var actorUrl = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
-		var activities = user.notes().stream()
+		var notes = noteRepository.findByUsername(username);
+		var activities = notes.stream()
 			.map(note -> Activity.Note.of(note.content()))
 			.map(note -> Activity.Create.of(actorUrl, note))
 			.toList();

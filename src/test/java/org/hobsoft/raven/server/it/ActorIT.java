@@ -2,7 +2,6 @@ package org.hobsoft.raven.server.it;
 
 import java.security.KeyPair;
 import java.util.Base64;
-import java.util.Collections;
 
 import org.hobsoft.raven.server.TestKeys;
 import org.hobsoft.raven.server.User;
@@ -36,7 +35,7 @@ public class ActorIT
 	{
 		var publicKey = TestKeys.publicKey("alg", "fmt", Base64.getDecoder().decode("ABCD"));
 		var keyPair = new KeyPair(publicKey, TestKeys.privateKey("alg", "fmt", new byte[0]));
-		userRepository.save(new User("alice", keyPair, Collections.emptyList()));
+		userRepository.save(new User("alice", keyPair));
 		
 		mvc.perform(get("/alice").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),

@@ -3,7 +3,6 @@ package org.hobsoft.raven.server;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +15,11 @@ public class DemoLoader
 {
 	private static final Logger LOG = LoggerFactory.getLogger(DemoLoader.class);
 
-	public DemoLoader(UserRepository userRepository)
+	public DemoLoader(UserRepository userRepository, NoteRepository noteRepository)
 	{
-		var user = new User("mark", generateKeyPair(), List.of(new Note("Up early and feel great!")));
+		var user = new User("mark", generateKeyPair());
 		userRepository.save(user);
+		noteRepository.save(user.name(), new Note("Up early and feel great!"));
 	}
 	
 	private static KeyPair generateKeyPair()
