@@ -19,7 +19,7 @@ public class DemoLoader
 	{
 		var user = new User("mark", generateKeyPair());
 		userRepository.save(user);
-		noteRepository.save(user.name(), new Note("Up early and feel great!"));
+		noteRepository.save(new Note(user.name(), "Up early and feel great!"));
 	}
 	
 	private static KeyPair generateKeyPair()

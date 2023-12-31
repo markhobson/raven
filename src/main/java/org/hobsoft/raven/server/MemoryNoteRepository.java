@@ -1,33 +1,30 @@
 package org.hobsoft.raven.server;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemoryNoteRepository implements NoteRepository
 {
-	private final Map<String, List<Note>> notes;
+	private final List<Note> notes;
 	
 	public MemoryNoteRepository()
 	{
-		notes = new HashMap<>();
+		notes = new ArrayList<>();
 	}
 	
 	@Override
 	public List<Note> findByUsername(String username)
 	{
-		return notes.getOrDefault(username, Collections.emptyList());
+		return notes.stream().filter(note -> note.username().equals(username)).toList();
 	}
 	
 	@Override
-	public void save(String username, Note note)
+	public void save(Note note)
 	{
-		notes.computeIfAbsent(username, key -> new ArrayList<>()).add(note);
+		notes.add(note);
 	}
 	
 	@Override

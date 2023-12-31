@@ -6,7 +6,7 @@ public interface NoteRepository
 {
 	List<Note> findByUsername(String username);
 	
-	void save(String username, Note note);
+	void save(Note note);
 	
 	void deleteAll();
 }
