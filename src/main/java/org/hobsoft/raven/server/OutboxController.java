@@ -32,7 +32,7 @@ public class OutboxController
 		}
 		
 		var actorUrl = MvcUriComponentsBuilder.fromController(ActorController.class).build(user.name());
-		var notes = noteRepository.findByUsername(username);
+		var notes = noteRepository.findByUserId(user.id());
 		var activities = notes.stream()
 			.map(note -> Activity.Note.of(note.content()))
 			.map(note -> Activity.Create.of(actorUrl, note))

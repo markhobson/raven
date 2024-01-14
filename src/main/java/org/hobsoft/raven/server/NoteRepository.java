@@ -2,9 +2,11 @@ package org.hobsoft.raven.server;
 
 import java.util.List;
 
-public interface NoteRepository
+import org.springframework.data.repository.Repository;
+
+public interface NoteRepository extends Repository<Note, Long>
 {
-	List<Note> findByUsername(String username);
+	List<Note> findByUserId(Long userId);
 	
 	Note save(Note note);
 	

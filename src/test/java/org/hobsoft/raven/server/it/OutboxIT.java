@@ -2,6 +2,7 @@ package org.hobsoft.raven.server.it;
 
 import org.hobsoft.raven.server.Note;
 import org.hobsoft.raven.server.NoteRepository;
+import org.hobsoft.raven.server.TestKeys;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +36,7 @@ public class OutboxIT
 	@Test
 	public void canGetEmptyOutbox() throws Exception
 	{
-		userRepository.save(new User("alice", null));
+		userRepository.save(new User(null, "alice", TestKeys.publicKey(), TestKeys.privateKey()));
 		
 		mvc.perform(get("/alice/outbox")).andExpectAll(
 			status().isOk(),
@@ -54,8 +55,8 @@ public class OutboxIT
 	@Test
 	public void canGetOutboxActivity() throws Exception
 	{
-		var user = userRepository.save(new User("alice", null));
-		noteRepository.save(new Note(user.name(), "Hello world"));
+		var user = userRepository.save(new User(null, "alice", TestKeys.publicKey(), TestKeys.privateKey()));
+		noteRepository.save(new Note(null, user.id(), "Hello world"));
 		
 		mvc.perform(get("/alice/outbox").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),

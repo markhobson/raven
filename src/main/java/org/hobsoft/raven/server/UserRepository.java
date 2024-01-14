@@ -1,6 +1,8 @@
 package org.hobsoft.raven.server;
 
-public interface UserRepository
+import org.springframework.data.repository.Repository;
+
+public interface UserRepository extends Repository<User, Long>
 {
 	User findByName(String name);
 	

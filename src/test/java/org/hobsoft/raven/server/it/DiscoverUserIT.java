@@ -1,5 +1,6 @@
 package org.hobsoft.raven.server.it;
 
+import org.hobsoft.raven.server.TestKeys;
 import org.hobsoft.raven.server.User;
 import org.hobsoft.raven.server.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +30,7 @@ public class DiscoverUserIT
 	@Test
 	public void canDiscoverUser() throws Exception
 	{
-		userRepository.save(new User("alice", null));
+		userRepository.save(new User(null, "alice", TestKeys.publicKey(), TestKeys.privateKey()));
 		
 		mvc.perform(get("/.well-known/webfinger")
 				.queryParam("resource", "acct:alice@social.example")

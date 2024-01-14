@@ -17,8 +17,9 @@ public class DemoLoader
 
 	public DemoLoader(UserRepository userRepository, NoteRepository noteRepository)
 	{
-		var user = userRepository.save(new User("mark", generateKeyPair()));
-		noteRepository.save(new Note(user.name(), "Up early and feel great!"));
+		var keyPair = generateKeyPair();
+		var user = userRepository.save(new User(null, "mark", keyPair.getPublic(), keyPair.getPrivate()));
+		noteRepository.save(new Note(null, user.id(), "Up early and feel great!"));
 	}
 	
 	private static KeyPair generateKeyPair()
