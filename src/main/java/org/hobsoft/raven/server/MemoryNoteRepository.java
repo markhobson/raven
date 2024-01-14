@@ -22,9 +22,10 @@ public class MemoryNoteRepository implements NoteRepository
 	}
 	
 	@Override
-	public void save(Note note)
+	public Note save(Note note)
 	{
 		notes.add(note);
+		return note;
 	}
 	
 	@Override

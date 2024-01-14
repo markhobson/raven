@@ -4,7 +4,7 @@ public interface UserRepository
 {
 	User findByName(String name);
 	
-	void save(User user);
+	User save(User user);
 	
 	void deleteAll();
 }

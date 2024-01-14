@@ -54,8 +54,8 @@ public class OutboxIT
 	@Test
 	public void canGetOutboxActivity() throws Exception
 	{
-		userRepository.save(new User("alice", null));
-		noteRepository.save(new Note("alice", "Hello world"));
+		var user = userRepository.save(new User("alice", null));
+		noteRepository.save(new Note(user.name(), "Hello world"));
 		
 		mvc.perform(get("/alice/outbox").header("X-Forwarded-Host", "social.example")).andExpectAll(
 			status().isOk(),
