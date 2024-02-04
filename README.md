@@ -107,8 +107,7 @@ mvn spring-boot:run
 Or to run the server locally using Docker on port 8080:
 
 ```
-docker build -t raven-server .
-docker run --rm -p8080:8080 raven-server
+docker compose up --build
 ```
 
 The latest Docker image is also available on [Docker Hub](https://hub.docker.com/r/markhobson/raven-server):

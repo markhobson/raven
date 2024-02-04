@@ -1,0 +1,16 @@
+services:
+
+  database:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=raven
+      - POSTGRES_PASSWORD=password
+
+  raven-server:
+    build: .
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/raven
+      - SPRING_DATASOURCE_USERNAME=raven
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8080:8080"
