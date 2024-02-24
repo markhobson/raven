@@ -26,7 +26,7 @@
 	</licenses>
 
 	<properties>
-		<springBootVersion>3.2.2</springBootVersion>
+		<springBootVersion>3.2.3</springBootVersion>
 	</properties>
 	
 	<build>
