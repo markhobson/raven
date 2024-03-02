@@ -126,11 +126,27 @@ To deploy the server to [Fly.io](https://fly.io/):
    ```
    fly apps create <app-name>
    ```
-4. Deploy the app:
+4. Create a database:
+   ```
+   fly postgres create --name <database-app-name>
+   ```
+5. Attach the app to the database:
+   ```
+   fly postgres attach <database-app-name> --app <app-name>
+   ```
+   Note the database name and credentials in the `DATABASE_URL` secret.
+6. Configure the app to connect to the database:
+   ```
+   fly secrets set --app <app-name> \
+       SPRING_DATASOURCE_URL=jdbc:postgresql://<database-app-name>.flycast:5432/<database-name>?sslmode=disable \
+       SPRING_DATASOURCE_USERNAME=<database-username> \
+       SPRING_DATASOURCE_PASSWORD=<database-password>
+   ```
+7. Deploy the app:
    ```
    fly deploy
    ```
-5. Open the app in a browser:
+8. Open the app in a browser:
    ```
    fly open
    ```
