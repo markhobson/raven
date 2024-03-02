@@ -148,7 +148,7 @@ To deploy the server to [Fly.io](https://fly.io/):
    ```
 8. Open the app in a browser:
    ```
-   fly open
+   fly apps open
    ```
 
 The server will be running on `https://<app-name>.fly.dev`.
