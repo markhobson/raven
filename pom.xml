@@ -26,7 +26,7 @@
 	</licenses>
 
 	<properties>
-		<springBootVersion>3.2.9</springBootVersion>
+		<springBootVersion>3.3.3</springBootVersion>
 	</properties>
 	
 	<build>
@@ -168,7 +168,13 @@
 		
 		<dependency>
 			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
+			<artifactId>flyway-database-hsqldb</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 	
