@@ -41,14 +41,14 @@ public class ActorIT
 						"https://www.w3.org/ns/activitystreams",
 						"https://w3id.org/security/v1"
 					],
-					"id": "http://social.example/alice",
-					"type": "Person",
-					"inbox": "http://social.example/alice/inbox",
-					"outbox": "http://social.example/alice/outbox",
+					"as:id": "http://social.example/alice",
+					"as:type": "Person",
+					"as:inbox": "http://social.example/alice/inbox",
+					"as:outbox": "http://social.example/alice/outbox",
 					"preferredUsername": "alice",
 					"publicKey": {
-						"id": "http://social.example/alice#main-key",
-						"owner": "http://social.example/alice",
+						"sec:id": "http://social.example/alice#main-key",
+						"sec:owner": "http://social.example/alice",
 						"publicKeyPem": "${publicKeyPem}"
 					}
 				}

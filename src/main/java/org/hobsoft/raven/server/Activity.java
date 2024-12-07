@@ -1,10 +1,8 @@
 package org.hobsoft.raven.server;
 
 import java.net.URI;
-import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,11 +15,26 @@ public final class Activity
 {
 	public static final String MIME_TYPE = "application/activity+json";
 	
-	public static final URI CONTEXT = URI.create("https://www.w3.org/ns/activitystreams");
+	public static final String CONTEXT = "https://www.w3.org/ns/activitystreams";
+	
+	public static final String BASE_IRI = "https://www.w3.org/ns/activitystreams#";
 	
 	private Activity()
 	{
 		throw new AssertionError();
+	}
+	
+	/**
+	 * ActivityStreams link.
+	 *
+	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link">Link</a>
+	 */
+	public record Link(@JsonProperty("@id") URI id)
+	{
+		public static Link of(URI id)
+		{
+			return new Link(id);
+		}
 	}
 	
 	/**
@@ -33,13 +46,10 @@ public final class Activity
 	{
 		String TYPE = "Object";
 		
-		@JsonProperty("@context")
-		@JsonFormat(with = JsonFormat.Feature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
-		@JsonInclude(JsonInclude.Include.NON_EMPTY)
-		List<URI> contexts();
-		
+		@JsonProperty(BASE_IRI + "type")
 		String type();
 		
+		@JsonProperty(BASE_IRI + "content")
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		String content();
 	}
@@ -50,14 +60,13 @@ public final class Activity
 	 * @see <a href="https://www.w3.org/TR/activitypub/#actor-objects">Actors</a>
 	 */
 	public record Actor(
-		List<URI> contexts,
-		URI id,
+		@JsonProperty(BASE_IRI + "id") URI id,
 		String type,
 		String content,
-		URI inbox,
-		URI outbox,
-		String preferredUsername,
-		Security.PublicKey publicKey
+		@JsonProperty(BASE_IRI + "inbox") URI inbox,
+		@JsonProperty(BASE_IRI + "outbox") URI outbox,
+		@JsonProperty(BASE_IRI + "preferredUsername") String preferredUsername,
+		@JsonProperty(Security.BASE_IRI + "publicKey") Security.PublicKey publicKey
 	) implements AbstractObject
 	{
 		public static final String PERSON_TYPE = "Person";
@@ -69,18 +78,17 @@ public final class Activity
 	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">OrderedCollection</a>
 	 */
 	public record OrderedCollection(
-		List<URI> contexts,
 		String type,
 		String content,
-		int totalItems,
-		List<? extends AbstractObject> orderedItems
+		@JsonProperty(BASE_IRI + "totalItems") int totalItems,
+		@JsonProperty(BASE_IRI + "orderedItems") List<? extends AbstractObject> orderedItems
 	) implements AbstractObject
 	{
 		public static final String TYPE = "OrderedCollection";
 		
 		public static OrderedCollection of(List<? extends AbstractObject> orderedItems)
 		{
-			return new OrderedCollection(List.of(CONTEXT), TYPE, null, orderedItems.size(), orderedItems);
+			return new OrderedCollection(TYPE, null, orderedItems.size(), orderedItems);
 		}
 	}
 	
@@ -93,8 +101,10 @@ public final class Activity
 	{
 		String TYPE = "Activity";
 		
-		URI actor();
+		@JsonProperty(BASE_IRI + "actor")
+		Link actor();
 		
+		@JsonProperty(BASE_IRI + "object")
 		AbstractObject object();
 	}
 	
@@ -104,10 +114,9 @@ public final class Activity
 	 * @see <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-create">Create</a>
 	 */
 	public record Create(
-		List<URI> contexts,
 		String type,
 		String content,
-		URI actor,
+		Link actor,
 		AbstractObject object
 	) implements AbstractActivity
 	{
@@ -115,12 +124,11 @@ public final class Activity
 		
 		public static Create of(URI actor, AbstractObject object)
 		{
-			return new Create(Collections.emptyList(), TYPE, null, actor, object);
+			return new Create(TYPE, null, Link.of(actor), object);
 		}
 	}
 	
 	public record Note(
-		List<URI> contexts,
 		String type,
 		String content
 	) implements AbstractObject
@@ -129,7 +137,7 @@ public final class Activity
 		
 		public static Note of(String content)
 		{
-			return new Note(Collections.emptyList(), TYPE, content);
+			return new Note(TYPE, content);
 		}
 	}
 }

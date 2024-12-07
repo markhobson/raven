@@ -110,6 +110,14 @@
 				<scope>import</scope>
 			</dependency>
 		
+			<!-- JSON-LD -->
+			
+			<dependency>
+				<groupId>com.github.jsonld-java</groupId>
+				<artifactId>jsonld-java</artifactId>
+				<version>0.13.6</version>
+			</dependency>
+			
 		</dependencies>
 	
 	</dependencyManagement>
@@ -170,6 +178,13 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- JSON-LD -->
+		
+		<dependency>
+			<groupId>com.github.jsonld-java</groupId>
+			<artifactId>jsonld-java</artifactId>
 		</dependency>
 	
 	</dependencies>
